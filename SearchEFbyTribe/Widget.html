@@ -1,0 +1,51 @@
+<div>
+<form id="locForm" name="locForm" class="frmStyle1 frmStyle2" onsubmit="return false;">
+  <fieldset><legend>
+Search Envirofacts by Tribe:
+</legend>
+Tribes in the continental US.<br /><br />
+
+1. Select an EPA region<br />
+        <select name="pregion" size="1" data-dojo-attach-point="regNode" data-dojo-attach-event="onchange: _changeRegionEvent">
+            <option value="--">Select a Region</option>
+            <option value="1">EPA Region 1</option>
+            <option value="2">EPA Region 2</option>
+            <!--<option value="3">EPA Region 3</option>-->
+            <option value="4">EPA Region 4</option>
+            <option value="5">EPA Region 5</option>
+            <option value="6">EPA Region 6</option>
+            <option value="7">EPA Region 7</option>
+            <option value="8">EPA Region 8</option>
+            <option value="9">EPA Region 9</option>
+            <option value="10">EPA Region 10</option>
+            
+         </select>
+<br /><br />
+2. Choose a tribe<br />
+ <div data-dojo-attach-point="eftribalNode" style="display: none;">
+ 
+ </div>
+ <br />
+ <div data-dojo-attach-point="nolandtribe" style="display: none;">
+ 
+ </div>      
+ <br />
+<input type="button" value="Search" data-dojo-attach-event="onclick: _drawEFxml" />
+<input type="button" value="Clear" data-dojo-attach-event="onclick: _clearEF" />
+<div data-dojo-attach-point="countdiv"></div>
+</fieldset>
+  </form>
+ 
+ 
+ 
+<div data-dojo-attach-point="dwNode" style="display: none;">   
+  <a href="javascript:void(0)" class="toggle" data-dojo-attach-point="dwNodeAnchor" data-dojo-attach-event="onmousedown:_toggleDownload">    
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download
+  </a>        
+  <div data-dojo-attach-point="dwNodeItems" style="position: relative; top: 0px; left: 2px; background-color: #FFFFFF;display: none; margin-left: 10px;">
+    <div data-dojo-attach-point="efDownloadNode" style="margin: 16px 6px 6px 6px; padding-top: 10px;"></div>
+  </div>
+</div>  
+</div>
+
+
