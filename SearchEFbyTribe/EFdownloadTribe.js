@@ -1,12 +1,21 @@
 define([
-    "dojo/_base/declare",
-    "dijit/_Widget",
+  "dojo/_base/declare",
+  "dojo/dom-construct",
+  "dijit/_Widget",
   "dijit/_Templated",
   "dojo/text!./templates/EFdownload.html",
   "esri/tasks/Geoprocessor",
   "./configLocal"
-], function(declare, _Widget,_Templated,template,Geoprocessor,_config){
-    return declare("EFdownload", [_Widget, _Templated], {
+], function(
+ declare,
+ domConstruct,
+ _Widget,
+ _Templated,
+ template,
+ Geoprocessor,
+ _config
+ ){
+    return declare("EFdownloadTribe", [_Widget, _Templated], {
     templateString: template,
     widgetsInTemplate: false,
     constructor: function (options, srcRefNode) {
@@ -19,24 +28,17 @@ define([
         this.eftype = options.eftype;
         this.parentWidget = options.parentWidget;
         // mixin constructor options 
-        dojo.safeMixin(this, options);
+        declare.safeMixin(this, options);
 
-
-
-//move to config
        var maprestbaseurl = _config.maprestbaseurl; 
        this.gpxmlclusterurl = maprestbaseurl + _config.gpxmlclusterurl;        
        this.gpxml2shpcsvurl = maprestbaseurl + _config.gpxml2shpcsvurl;
 
-        var gpshpurl = this.gpxml2shpcsvurl;
-        //this.gp = new esri.tasks.Geoprocessor(gpshpurl);
+        var gpshpurl = this.gpxml2shpcsvurl;       
         this.gp = new Geoprocessor(gpshpurl);
-
     },
 
     startup: function () {
-
-
     },
     postCreate: function () {
        this.imgSHP.src = this.parentWidget.folderUrl + "images/shpBtn.png";
@@ -45,11 +47,7 @@ define([
     },
 
     _saveShapefile: function () {       
-
-
-        this.loadNode.innerHTML = "Loading... please wait";
-
-        
+        this.loadNode.innerHTML = "Loading... please wait";        
         var params;
         
         var efbaseurl = this.parentWidget.baseurl;
@@ -66,8 +64,8 @@ define([
                 if (p == "maxy") tmaxy = v;
             }
             params = { "xmlurl": efbaseurl, "min_longitude": tminx, "min_latitude": tminy, "max_longitude": tmaxx, "max_latitude": tmaxy, "output_format": "shapefile" };
-        
 
+        
         
         if (this.gprequest) this.gprequest.cancel();
         var wobj = this;
@@ -99,8 +97,11 @@ define([
                 if (p == "maxx") tmaxx = v;
                 if (p == "maxy") tmaxy = v;
             }
+
+
             params = { "xmlurl": efbaseurl, "min_longitude": tminx, "min_latitude": tminy, "max_longitude": tmaxx, "max_latitude": tmaxy, "output_format": "csvfile" };
-        
+
+       
         var wobj = this;
         this.gprequest = this.gp.execute(params, function (results) {
             wobj.loadNode.innerHTML = "";
@@ -110,10 +111,7 @@ define([
             wobj.loadNode.innerHTML = "Generate CSV file failed. Error: " + err;
             console.log("CSV gp failed: ", err);
         });
-    },
-    _saveGeoRss: function () {
-
-    },
+    },   
     _saveKML: function () {
         var gpfeaturl = this.gpxmlclusterurl;
         
@@ -135,11 +133,8 @@ define([
        
         window.open(url);
     },
-
     destroy: function () {
-
-        dojo.empty(this.domNode);
-
+        domConstruct.empty(this.domNode);
     }
  });
 
